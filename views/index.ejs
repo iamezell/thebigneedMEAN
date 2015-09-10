@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html ng-app="diveLog">
+<head>
+  <title>Dive Log (ng-controller)</title>
+  <link href="css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container-fluid">
+    <h1>My Latest Dives (ng-controller)</h1>
+    <div class="row" ng-controller="diveLogCtrl">
+      <div class="col-sm-4"
+           ng-repeat="dive in dives">
+        <h3>{{dive.site}}</h3>
+        <h4>{{dive.location}}</h4>
+        <h2>{{dive.depth}} feet | {{dive.time}} min</h2>
+      </div>
+    </div>
+  </div>
+
+  <script src="javascripts/bundle.js"></script>
+  
+</body>
 </html>

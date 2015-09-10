@@ -15,8 +15,23 @@
     "ejs": "~0.8.5"
   },
   "devDependencies": {
+    "angular": "^1.4.5",
+    "browserify": "^11.0.1",
+    "chai": "^3.2.0",
     "gulp-jscs": "^2.0.0",
     "gulp-jshint": "^1.11.2",
-    "gulp-util": "^3.0.6"
+    "gulp-print": "^1.1.0",
+    "gulp-util": "^3.0.6",
+    "jshint-stylish": "^2.0.1",
+    "karma": "^0.13.9",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-sinon": "^1.0.4",
+    "mocha": "^2.3.2",
+    "phantomjs": "^1.9.18",
+    "sinon": "^1.16.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
