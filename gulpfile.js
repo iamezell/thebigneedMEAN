@@ -7,6 +7,12 @@ var source = require('vinyl-source-stream');
 var gulpPrint = require('gulp-print');
 var buffer = require('vinyl-buffer');
 var Server = require('karma').Server;
+var browserSync = require('browser-sync').create();
+var nodemon =  require('gulp-nodemon');
+var watch = require('gulp-watch');
+var glob = require('glob');
+var rename = require('gulp-rename');
+var es = require('event-stream');
 
 gulp.task('jscs', function(){
 	return gulp.src('./src/js/app.js')
@@ -21,6 +27,35 @@ gulp.task('test', function (done) {
     singleRun: true
   }, done).start();
 });
+
+gulp.task('start',['vet'], function(){
+  browserSync.init({
+    proxy: 'http://localhost:3000',
+    port: 5000,
+    injectChanges: false
+  });
+
+ // all browsers reload after tasks are complete
+ gulp.watch(['src/**/**/**/*.js', 'views/*.ejs'],['js-watch']);
+})
+
+
+gulp.task('nodemon', function(cb){
+  var started = false;
+
+  return nodemon({
+   script: 'bin/www'
+
+  }).on('start', function(){
+    //to avoid nodemon being started multiple times
+       if(!started){
+         cb();
+         started = true;
+       }
+     
+     })
+})
+
 
 gulp.task('vet', ['test','jscs'], function(){
 
