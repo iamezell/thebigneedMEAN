@@ -1,10 +1,9 @@
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
-var util = require('gulp-util');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
-var gulpPrint = require('gulp-print');
+//var gulpPrint = require('gulp-print');
 var buffer = require('vinyl-buffer');
 var Server = require('karma').Server;
 var browserSync = require('browser-sync').create();
@@ -25,7 +24,8 @@ gulp.task('jscs', function(){
 gulp.task('js-watch', ['vet'], function(){
   console.log('something changed');
   browserSync.reload();
-})
+});
+
 gulp.task('test', function (done) {
   new Server({
     configFile: __dirname + '/karma.conf.js',
@@ -42,7 +42,7 @@ gulp.task('start',['vet'], function(){
 
  // all browsers reload after tasks are complete
  gulp.watch(['src/**/**/**/*.js', 'views/*.ejs'],['js-watch']);
-})
+});
 
 
 gulp.task('nodemon', function(cb){
@@ -59,7 +59,7 @@ gulp.task('nodemon', function(cb){
        }
      
      })
-})
+});
 
 
 gulp.task('vet', ['test','jscs','nodemon'], function(){
@@ -74,7 +74,7 @@ gulp.task('vet', ['test','jscs','nodemon'], function(){
             .pipe(buffer())
             .pipe(rename({extname:'.bundle.js'}))
             .pipe(gulp.dest('./public/javascripts'))
-          })
+          });
           es.merge(tasks).on('end', function(){
             console.log('done');
           });
