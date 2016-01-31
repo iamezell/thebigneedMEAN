@@ -13,6 +13,19 @@ var watch = require('gulp-watch');
 var glob = require('glob');
 var rename = require('gulp-rename');
 var es = require('event-stream');
+var srcPath = 'src';
+var destPath = 'public/stylesheets';
+var fs =require('fs');
+var path = require('path');
+var concat = require('gulp-concat');
+var cssimport = require('gulp-cssimport');
+var cssmin = require('gulp-cssmin');
+function getFolders(dir){
+  return fs.readdirSync(dir)
+  .filter(function(file){
+    return fs.statSync(path.join(dir, file)).isDirectory();
+  });
+}
 
 gulp.task('jscs', function(){
 	return gulp.src('./src/js/app.js')
@@ -41,7 +54,7 @@ gulp.task('start',['vet'], function(){
   });
 
  // all browsers reload after tasks are complete
- gulp.watch(['src/**/**/**/*.js', 'views/*.ejs'],['js-watch']);
+ gulp.watch(['src/**/**/*.js', 'views/*.ejs'],['js-watch']);
 })
 
 
@@ -64,30 +77,66 @@ gulp.task('nodemon', function(cb){
 
 gulp.task('vet', ['test','jscs','nodemon'], function(){
 	
-	glob('./src/**/js/**.js', function(err, files){
-          if(err) done(err);
+	// glob('./src/app/**.js', function(err, files){
+ //          if(err) done(err);
 
-          var tasks = files.map(function(entry){
-            return browserify({entries:[entry]})
-            .bundle()
-            .pipe(source(entry))
-            .pipe(buffer())
-            .pipe(rename({extname:'.bundle.js'}))
-            .pipe(gulp.dest('./public/javascripts'))
-          })
-          es.merge(tasks).on('end', function(){
-            console.log('done');
-          });
-        });
-	//return browserify('./src/js/app.js')
-	//.bundle()
-	//Pass desired output filename to vinyl-source-stream
-    //.pipe(source('bundle.js'))
+ //          var tasks = files.map(function(entry){
+ //            return browserify({entries:[entry]})
+ //            .bundle()
+ //            .pipe(source(entry))
+ //            .pipe(buffer())
+ //            .pipe(rename({extname:'.bundle.js'}))
+ //            .pipe(gulp.dest('./public/javascripts'))
+ //          })
+ //          es.merge(tasks).on('end', function(){
+ //            console.log('done');
+ //          });
+ //        });
+	return browserify('./src/app/TBN.js')
+	.bundle()
+	// Pass desired output filename to vinyl-source-stream
+    .pipe(source('bundle.js'))
      // Start piping stream to tasks!
-// 	.pipe(buffer())
+	.pipe(buffer())
 	// .pipe(jshint())
 	// .pipe(jshint.reporter('jshint-stylish',{verbose:true}))
 	// .pipe(jshint.reporter('fail'))
-	// // Start piping stream to tasks!
-   //.pipe(gulp.dest('./public/javascripts'));
+	// Start piping stream to tasks!
+   .pipe(gulp.dest('./public/javascripts'));
+});
+
+gulp.task('css', function(){
+
+  // glob('./src/**/css/**.css', function(err, files) {
+  //   if(err) done(err);
+
+  //   var tasks = files.map(function(entry){
+  //    gulp.src(entry)
+  //    .pipe(cssmin())
+  //    .pipe(rename)
+  //   }
+
+  var folders = getFolders(srcPath);
+  var tasks = folders.map(function(folder){
+
+    return gulp.src(path.join(srcPath, folder, '/**/*.css'))
+    .pipe(concat(folder + '.min.css'))
+    .pipe(cssimport())
+    .pipe(cssmin())
+    .pipe(gulp.dest(path.join(destPath,folder, '/css')))
+  })
+      
+  //  //Pass desired output filename to vinyl-source-stream
+  //     gulp.src((source(entry)))
+  //    .pipe(buffer())
+  //    .pipe(rename({extname: '.bundle.js'}))
+  //  .pipe(gulp.dest('./public/javascripts'));
+
+  // });
+     // es.merge(tasks).on('end', function(){
+     //   console.log('done');
+     // });
+
+  // });
+
 });
