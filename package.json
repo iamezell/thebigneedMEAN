@@ -29,6 +29,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-cssimport": "^2.1.2",
     "gulp-cssmin": "^0.1.7",
+    "gulp-inject": "^3.0.0",
     "gulp-jscs": "^2.0.0",
     "gulp-jshint": "^1.11.2",
     "gulp-nodemon": "^2.0.4",

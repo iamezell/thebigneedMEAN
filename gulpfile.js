@@ -98,11 +98,11 @@ gulp.task('css', function(){
   var folders = getFolders(srcPath);
   var tasks = folders.map(function(folder){
 
-    return gulp.src(path.join(srcPath, folder, '/**/*.css'))
+    return gulp.src('./src/css/**/*.css')
     .pipe(concat(folder + '.min.css'))
     .pipe(cssimport())
     .pipe(cssmin())
-    .pipe(gulp.dest(path.join(destPath,folder, '/css')))
+    .pipe(gulp.dest(path.join(destPath, folder, '/css')))
   })
 
 });
