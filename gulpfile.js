@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
+var sass = require('gulp-sass');
+var inject = require('gulp-inject');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 //var gulpPrint = require('gulp-print');
@@ -75,23 +77,8 @@ gulp.task('nodemon', function(cb){
 });
 
 
-gulp.task('vet', ['test','jscs','nodemon'], function(){
+gulp.task('vet', ['test','jscs','sass','css','nodemon'], function(){
 	
-	// glob('./src/app/**.js', function(err, files){
- //          if(err) done(err);
-
- //          var tasks = files.map(function(entry){
- //            return browserify({entries:[entry]})
- //            .bundle()
- //            .pipe(source(entry))
- //            .pipe(buffer())
- //            .pipe(rename({extname:'.bundle.js'}))
- //            .pipe(gulp.dest('./public/javascripts'))
- //          })
- //          es.merge(tasks).on('end', function(){
- //            console.log('done');
- //          });
- //        });
 	return browserify('./src/app/TBN.js')
 	.bundle()
 	// Pass desired output filename to vinyl-source-stream
@@ -107,14 +94,6 @@ gulp.task('vet', ['test','jscs','nodemon'], function(){
 
 gulp.task('css', function(){
 
-  // glob('./src/**/css/**.css', function(err, files) {
-  //   if(err) done(err);
-
-  //   var tasks = files.map(function(entry){
-  //    gulp.src(entry)
-  //    .pipe(cssmin())
-  //    .pipe(rename)
-  //   }
 
   var folders = getFolders(srcPath);
   var tasks = folders.map(function(folder){
@@ -125,18 +104,12 @@ gulp.task('css', function(){
     .pipe(cssmin())
     .pipe(gulp.dest(path.join(destPath,folder, '/css')))
   })
-      
-  //  //Pass desired output filename to vinyl-source-stream
-  //     gulp.src((source(entry)))
-  //    .pipe(buffer())
-  //    .pipe(rename({extname: '.bundle.js'}))
-  //  .pipe(gulp.dest('./public/javascripts'));
-
-  // });
-     // es.merge(tasks).on('end', function(){
-     //   console.log('done');
-     // });
-
-  // });
 
 });
+
+
+gulp.task('sass', function(){
+  return gulp.src('./src/sass/**/*.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('./src/css'))
+})

@@ -2,4 +2,62 @@
 
  <div ng-controller="signinController">
         <h1>{{ message }}</h1>
+   <div class="login-wrapper">
+		<div class="text-center">
+			<h2 class="fadeInUp animation-delay8" style="font-weight:bold">
+				<span class="text-success">The Big</span> <span style="color:#ccc; text-shadow:0 1px #fff">NEED</span>
+			</h2>
+		</div>
+		<div class="login-widget animation-delay1">	
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<div class="pull-left">
+						<i class="fa fa-lock fa-lg"></i> Login
+					</div>
+
+					<div class="pull-right">
+						<span style="font-size:11px;">Don't have any account?</span>
+						<a class="btn btn-default btn-xs login-link" href="/signup" style="margin-top:-2px;"><i class="fa fa-plus-circle"></i> Sign up</a>
+					</div>
+				</div>
+				<div class="panel-body">
+					<form class="form-login">
+						<div class="form-group">
+							<label>Email</label>
+							<input type="text" id="email" placeholder="Email" name="email" class="form-control input-sm bounceIn animation-delay2" required>
+						</div>
+						<div class="form-group">
+							<label>Password</label>
+							<input type="password" id="password" placeholder="Password" name="password" class="form-control input-sm bounceIn animation-delay4" data-parsley-mincheck="3" required>
+						</div>
+						<div class="form-group">
+							<label class="label-checkbox inline">
+								<input type="checkbox" name="checkbox" class="regular-checkbox chk-delete" />
+								<span class="custom-checkbox info bounceIn animation-delay4"></span>
+							</label>
+							Remember me		
+						</div>
+		
+						<div class="seperator"></div>
+						<div class="form-group">
+							Forgot your password?<br/>
+							Click <a href="/" class="reset">here</a> to reset your password
+						</div>
+
+						<hr/>
+							
+						<a class="btn btn-success btn-sm bounceIn animation-delay5 login-link pull-right" id="loginBtn"><i class="fa fa-sign-in"></i> Sign in</a>
+					</form>
+				</div>
+				<a class="btn btn-block btn-social btn-facebook faceIt">
+  					<i class="fa fa-facebook"></i>
+  						Sign in with Facebook
+					</a>
+			</div><!-- /panel -->
+			
+		</div><!-- /login-widget -->
+		
+		
+	</div><!-- /login-wrapper -->
+
     </div>
