@@ -1,7 +1,9 @@
 $font-stack:    Helvetica, sans-serif;
 $primary-color: #333;
+@import './libs/test';
+@import '../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
 body {
   font: 100% $font-stack;
-  color: $primary-color;
+  background-color: $primary-color;
 }

@@ -21,6 +21,8 @@ var path = require('path');
 var concat = require('gulp-concat');
 var cssimport = require('gulp-cssimport');
 var cssmin = require('gulp-cssmin');
+
+
 function getFolders(dir){
   return fs.readdirSync(dir)
   .filter(function(file){
@@ -56,7 +58,7 @@ gulp.task('start',['vet'], function(){
   });
 
  // all browsers reload after tasks are complete
- gulp.watch(['src/**/**/*.js', 'views/*.ejs'],['js-watch']);
+ gulp.watch(['src/**/**/*.js', 'src/sass/**/*.scss','views/*.ejs'],['js-watch']);
 })
 
 
@@ -77,12 +79,12 @@ gulp.task('nodemon', function(cb){
 });
 
 
-gulp.task('vet', ['test','jscs','sass','css','nodemon'], function(){
+gulp.task('vet', ['test','jscs','sass','nodemon'], function(){
 	
 	return browserify('./src/app/TBN.js')
 	.bundle()
 	// Pass desired output filename to vinyl-source-stream
-    .pipe(source('bundle.js'))
+  .pipe(source('bundle.js'))
      // Start piping stream to tasks!
 	.pipe(buffer())
 	// .pipe(jshint())
@@ -92,24 +94,12 @@ gulp.task('vet', ['test','jscs','sass','css','nodemon'], function(){
    .pipe(gulp.dest('./public/javascripts'));
 });
 
-gulp.task('css', function(){
-
-
-  var folders = getFolders(srcPath);
-  var tasks = folders.map(function(folder){
-
-    return gulp.src('./src/css/**/*.css')
-    .pipe(concat(folder + '.min.css'))
-    .pipe(cssimport())
-    .pipe(cssmin())
-    .pipe(gulp.dest(path.join(destPath, folder, '/css')))
-  })
-
-});
 
 
 gulp.task('sass', function(){
-  return gulp.src('./src/sass/**/*.scss')
+  return gulp.src(['./src/sass/*.scss'])
   .pipe(sass().on('error', sass.logError))
-  .pipe(gulp.dest('./src/css'))
+  .pipe(cssmin())
+  .pipe(rename('tbn.min.css'))
+  .pipe(gulp.dest('./public/stylesheets/'))
 })
