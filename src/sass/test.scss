@@ -7,3 +7,16 @@ body {
   font: 100% $font-stack;
   color: $primary-color;
 }
+
+
+.ng-invalid {
+  .ng-dirty{
+    border: 1px solid red;
+  }
+}
+
+.ng-valid{
+  .ng-dirty{
+    border: 1px solid green;
+  }
+}

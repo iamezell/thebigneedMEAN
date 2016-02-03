@@ -14,24 +14,36 @@
 					<i class="fa fa-plus-circle fa-lg"></i> Sign up
 				</div>
 				<div class="panel-body">
-					<form class="form-login" id="data-parsley-validate">
+					<form class="form-login" name="formLogin" ng-submit="registerUser()">
+
 						<div class="form-group">
 							<label>Username</label>
-							<input type="text" id="username" placeholder="Username" class="form-control input-sm bounceIn animation-delay2" name="username" data-parsley-mincheck="6" data-parsley-group="block1" required/>
-						</div><!-- /form-group -->
+							<input type="text" id="username" placeholder="Username" class="form-control input-sm" name="username" ng-minlength="3" ng-model="user.username" required/>
+						<div ng-show="formLogin.username.$dirty && formLogin.username.$invalid">
+                            <div ng-show="formLogin.username.$error.required">Your name is required</div>
+                            <div ng-show="formLogin.username.$error.minlength">Your name must be greater then 3 characters</div>
+                        </div>
+                        </div><!-- /form-group -->
 						<div class="form-group">
 							<label>Password</label>
-							<input type="password" id="password" placeholder="Password" class="form-control input-sm bounceIn animation-delay3" name="password" id="password" data-parsley-mincheck="6" data-parsley-trigger="change" data-parsley-group="block2"required/>
+							<input type="password" id="password" placeholder="Password" class="form-control input-sm" name="password"  ng-model="user.password" ng-minlength="5" required/>
+                            <div ng-show="formLogin.password.$dirty && formLogin.password.$invalid">
+                                <div ng-show="formLogin.username.$error.required">Your password is required</div>
+                            </div>
 						</div><!-- /form-group -->
 						<div class="form-group">
 							<label>Confirm Password</label>
-							<input type="password" id="confirmPassword" placeholder="Confirm password" class="form-control input-sm bounceIn animation-delay4" id="confirmPassword" name="confirmPassword" data-parsley-equalto="#password" data-parsley-mincheck="6" data-parsley-group="block3" required/>
+							<input type="password" id="confirmPassword" placeholder="Confirm password" class="form-control input-sm " id="confirmPassword" name="confirmPassword"  required/>
 						</div><!-- /form-group -->
 						<div class="form-group">
 							<label>Email Address</label>
-							<input type="email" id="email" placeholder="Email address" class="form-control input-sm bounceIn animation-delay5" name="email" data-parsley-trigger="change"  data-parsley-group="block4" required/>
+							<input type="email" id="email" placeholder="email" class="form-control input-sm " name="email" ng-model="user.email" required/>
 						</div><!-- /form-group -->
-						
+                        <div ng-show="formLogin.email.$dirty && formLogin.email.$invalid">
+                            <div ng-show="formLogin.email.$error.required">Your name is required</div>
+                            <div ng-show="formLogin.email.$error.email">This is not a valid email.</div>
+                        </div>
+                        {{user.username}}
 						<!-- <div class="form-group">
 							<label class="label-checkbox">
 								 <input type="checkbox" data-parsley-trigger="change" name="agreement" required/>
@@ -46,11 +58,11 @@
 								Already have an account? <a href="/signin" class="primary-font login-link">Sign In</a>
 							</div>
 						</div><!-- /form-group -->
-							
+
 						<hr/>
 						<div class="form-group">
 							<div class="controls text-right">
-								<a class="btn btn-success btn-sm bounceIn animation-delay7 login-link signupBtn"><i class="fa fa-plus-circle"></i> Sign up</a>
+                                <button type="submit" class="btn btn-success btn-sm" ng-disabled="form.$dirty && form.$invalid">Sign up</button>
 							</div>
 						</div><!-- /form-group -->
 					</form>
