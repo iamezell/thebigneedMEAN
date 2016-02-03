@@ -5,6 +5,7 @@ var sass = require('gulp-sass');
 var inject = require('gulp-inject');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var uglify = require('gulp-uglify');
 //var gulpPrint = require('gulp-print');
 var buffer = require('vinyl-buffer');
 var Server = require('karma').Server;
@@ -91,7 +92,8 @@ gulp.task('vet', ['test','jscs','sass','nodemon'], function(){
 	// .pipe(jshint.reporter('jshint-stylish',{verbose:true}))
 	// .pipe(jshint.reporter('fail'))
 	// Start piping stream to tasks!
-   .pipe(gulp.dest('./public/javascripts'));
+  .pipe(uglify({mangle:false}))
+  .pipe(gulp.dest('./public/javascripts'));
 });
 
 
